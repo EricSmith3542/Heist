@@ -7,8 +7,10 @@ public class ShootingScript : MonoBehaviour
 {
     public Camera fpsCam;
     public float range = 100f;
+    public float knifeRange = 3f;
     public float damageDealt = 50f;
 
+    public WeaponsGraphics flash;
     
 
     // Start is called before the first frame update
@@ -25,7 +27,13 @@ public class ShootingScript : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && ((Weapons.currentWeapon == 1 && AmmoScriptTMP.pistolAmmo > 0) || (Weapons.currentWeapon == 2 && AmmoScriptTMP.taserAmmo > 0)))
         {
             Shoot();
-            WeaponsGraphics.MuzzleFlash();
+            flash.MuzzleFlash();
+        }
+
+        //Knife
+        if(Input.GetButtonDown("Fire1") && (Weapons.currentWeapon == 3))
+        {
+            Knife();
         }
 
         //Toss Grenade
@@ -47,11 +55,28 @@ public class ShootingScript : MonoBehaviour
                 target.TakeDamage(damageDealt);
             }
 
-
+            //Taze if holding taser
             if (target != null && Weapons.currentWeapon == 2)
             {
                 target.SetTazed();
             }
+        }
+    }
+
+    void Knife()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, knifeRange))
+        {
+            Debug.Log(hit.transform.name);
+
+            SecurityGuardAIDamage target = hit.transform.GetComponent<SecurityGuardAIDamage>();
+
+            if (target != null && Weapons.currentWeapon == 3)
+            {
+                target.TakeDamage(damageDealt);
+            }
+
         }
     }
 

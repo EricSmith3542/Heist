@@ -67,11 +67,11 @@ public class scr_camera : MonoBehaviour
 
                     try
                     {
-                        guard.GetComponent<SecurityGuardAI>().aiState = SecurityGuardAI.AIState.search;
+                       // guard.GetComponent<SecurityGuardAI>().aiState = SecurityGuardAI.AIState.search;
                     }
                     catch(Exception e)
                     {
-                        guard.GetComponent<SecurityGuardAI2>().aiState = SecurityGuardAI2.AIState.search;
+                       // guard.GetComponent<SecurityGuardAI2>().aiState = SecurityGuardAI2.AIState.search;
                     }
                 }
             }

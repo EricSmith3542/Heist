@@ -5,11 +5,15 @@ using UnityEngine;
 public class WeaponsGraphics : MonoBehaviour
 {
     public ParticleSystem muzzleFlash;
-    public GameObject hitEffectPrefab;
+    //private ParticleSystem flash;
 
-    public static void MuzzleFlash() {
-        //muzzleFlash.Play(true);
-
+    public void MuzzleFlash() {
+        //hitEffectPrefab = Instantiate(muzzleFlash);
+        //ParticleSystem flash = Instantiate(MuzzleFlash, firePoint.transform, Quaternion.identity);
+        //flash = new 
+        //muzzleFlash = getComponent<ParticleSystem>();
+        Debug.Log("Flashed");
+        muzzleFlash.Emit(1);
     }
 
     private void Update()
