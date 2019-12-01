@@ -7,7 +7,7 @@ public class ShootingScript : MonoBehaviour
 {
     public Camera fpsCam;
     public float range = 100f;
-    public float knifeRange = 3f;
+    public float knifeRange = .3f;
     public float damageDealt = 50f;
 
     public WeaponsGraphics flash;

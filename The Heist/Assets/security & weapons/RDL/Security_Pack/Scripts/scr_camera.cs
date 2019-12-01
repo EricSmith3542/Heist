@@ -39,6 +39,11 @@ public class scr_camera : MonoBehaviour
         }
     }
 
+    public bool getPlayerDetected()
+    {
+        return PlayerDetected;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")

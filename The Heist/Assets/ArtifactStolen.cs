@@ -6,6 +6,7 @@ using UnityEngine;
 public class ArtifactStolen : MonoBehaviour
 {
     public static float playerMoney = 0f;
+    public static bool artifactStolen = false;
 
 
    public string[] artifacts = { "GreekVase", "Vase2",  "Vase3", "Painting1", "Painting2", "QueenVictoria", "DragonStatue",
@@ -49,66 +50,79 @@ public class ArtifactStolen : MonoBehaviour
         if (other.gameObject.tag == "GreekVase")
         {
             playerMoney += artifactValue[0];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "Vase2")
         {
             playerMoney += artifactValue[1];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "Vase3")
         {
             playerMoney += artifactValue[2];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "Painting1")
         {
             playerMoney += artifactValue[3];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "Painting2")
         {
             playerMoney += artifactValue[4];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "QueenVictoria")
         {
             playerMoney += artifactValue[5];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "Dragonstatue")
         {
             playerMoney += artifactValue[6];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "FigurineStatue")
         {
             playerMoney += artifactValue[7];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "Discobulus")
         {
             playerMoney += artifactValue[8];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "NefertitiBust")
         {
             playerMoney += artifactValue[9];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "EgyptianCat")
         {
             playerMoney += artifactValue[10];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "JapaneseMask")
         {
             playerMoney += artifactValue[11];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "JuluisCeasar")
         {
             playerMoney += artifactValue[12];
+            artifactStolen = true;
             Destroy(other.gameObject);
         }
     }
