@@ -26,6 +26,10 @@ public class SecurityGuardAI : MonoBehaviour
     //Chick if player has been detected by a camera
     scr_camera playerDetected;
 
+    //Time before guard gives up on a search
+    private bool timerSet = false;
+    public float searchTimer = 30f;
+
     //How far in front the guard will detect
     public float sightDistance = 1.5f;
 
@@ -72,6 +76,18 @@ public class SecurityGuardAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Countdown timer for search state before guard gives up
+        if (timerSet)
+        {
+            searchTimer -= Time.deltaTime;
+
+            if(searchTimer <= 0f)
+            {
+                timerSet = false;
+                searchTimerEnded();
+            }
+        }
+
     }
 
     //Calculate life remaining after taking damage
@@ -108,9 +124,37 @@ public class SecurityGuardAI : MonoBehaviour
         }
     }
 
+    //Change state after guard fails to find player
+    public void searchTimerEnded()
+    {
+        Debug.Log("Back to patrol state");
+        aiState = AIState.patrol;
+    }
 
-    //If the guard sees the player
-    public bool Seen()
+    public void IsAttacked() {
+        if (guardAttacked)
+        {
+            Debug.Log("Guard attacked");
+            navMeshAgent.SetDestination(player.position);
+            aiState = AIState.chase;
+            anim.SetBool("chase", true);
+        }
+    }
+
+    //Change state if player is detected by the camera
+    public void IsDetected()
+    {
+        if (playerDetected.getPlayerDetected())
+        {
+            Debug.Log("Player Detected");
+            navMeshAgent.SetDestination(player.position);
+            aiState = AIState.search;
+            anim.SetBool("chase", true);
+        }
+    }
+
+//If the guard sees the player
+public bool Seen()
     {
         var directionToPlayer = player.position - transform.position;
         var distFromPlayer = Vector3.Distance(player.position, transform.position);
@@ -157,18 +201,10 @@ public class SecurityGuardAI : MonoBehaviour
                     }
 
                     //Check if guard has been attacked
-                    if (guardAttacked)
-                    {
-                        Debug.Log("Player Detected");
-                        aiState = AIState.chase;
-                    }
+                    IsAttacked();
 
                     //Check if camera has detected the guard
-                    if (playerDetected.getPlayerDetected())
-                    {
-                        Debug.Log("Player Detected");
-                        aiState = AIState.chase;
-                    }
+                    IsDetected();
                     break;
 
                 //The guard is actively seeking out the player
@@ -186,20 +222,17 @@ public class SecurityGuardAI : MonoBehaviour
                         anim.SetBool("chase", true);
                     }
 
-                    //Check if camera has detected the guard
-                    if (playerDetected.getPlayerDetected())
+                    //Set 30 second timer for search time for the Guard. The guard gives up after the time ends and goes back to patrol state
+                    if (timerSet == false)
                     {
-                        Debug.Log("Player Detected");
-                        aiState = AIState.chase;
+                        timerSet = true;
                     }
 
+                    //Check if camera has detected the guard
+                    IsDetected();
+
                     //Check if guard has been attacked
-                    if (guardAttacked)
-                    {
-                        navMeshAgent.SetDestination(player.position);
-                        aiState = AIState.chase;
-                        anim.SetBool("chase", true);
-                    }
+                    IsAttacked();
                     break;
 
                 //The guard is chasing the player
@@ -212,7 +245,7 @@ public class SecurityGuardAI : MonoBehaviour
 
                     var dist = Vector3.Distance(player.position, transform.position);
 
-                    /*
+                    /* 
                     if ((lethalForce && lethalKillDistance >= dist) || nonLethalKillDistance >= dist)
                     {
                         aiState = AIState.attack;
