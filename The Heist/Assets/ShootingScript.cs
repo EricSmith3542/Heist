@@ -11,6 +11,7 @@ public class ShootingScript : MonoBehaviour
     public float damageDealt = 50f;
 
     public WeaponsGraphics flash;
+    public Grenade grenade1;
     
 
     // Start is called before the first frame update
@@ -81,6 +82,6 @@ public class ShootingScript : MonoBehaviour
     }
 
     void GrenadeToss() {
-
+        grenade1.toss(gameObject.Transform.forward);
     }
 }
