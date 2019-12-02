@@ -82,6 +82,6 @@ public class ShootingScript : MonoBehaviour
     }
 
     void GrenadeToss() {
-        grenade1.toss(gameObject.Transform.forward);
+        //grenade1.toss(gameObject.Transform.forward);
     }
 }

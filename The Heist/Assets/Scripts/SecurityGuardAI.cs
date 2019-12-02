@@ -145,13 +145,13 @@ public class SecurityGuardAI : MonoBehaviour
     //Change state if player is detected by the camera
     public void IsDetected()
     {
-        //if (playerDetected.GetPlayerDetected())
-       // {
-        //    Debug.Log("Player Detected");
-        //    navMeshAgent.SetDestination(player.position);
-       //     aiState = AIState.search;
-        //    anim.SetBool("chase", true);
-        //}
+        if (playerDetected.GetPlayerDetected())
+       {
+           Debug.Log("Player Detected");
+           navMeshAgent.SetDestination(player.position);
+           aiState = AIState.search;
+           anim.SetBool("chase", true);
+       }
     }
 
     //If the guard sees the player

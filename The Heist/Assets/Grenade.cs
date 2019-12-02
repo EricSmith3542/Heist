@@ -5,7 +5,7 @@ using UnityEngine;
 public class Grenade : MonoBehaviour
 {
     public float speed;
-    public RigidBody rb;
+    //public RigidBody rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +20,7 @@ public class Grenade : MonoBehaviour
 
     public void toss(Vector3 forward)
     {
-        gameObject.Transform.Velocity = forward * speed;
+        //gameObject.Transform.Velocity = forward * speed;
     }
     void OnCollisionEnter(Collision collision)
     {
