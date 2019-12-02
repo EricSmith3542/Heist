@@ -31,11 +31,11 @@ public class SecurityGuardAI : MonoBehaviour
     public float searchTimer = 30f;
 
     //How far in front the guard will detect
-    public float sightDistance = 1.5f;
+    public float sightDistance = 1000f;
 
     //How far to each side the guard will see; if set to 30, guard will detect player 25 degrees to right or left
     //That is within the sightDistance
-    public float sightAngle = 25f;
+    public float sightAngle = 10000f;
 
     //Distance to kill player if using lethal/non force
     public float lethalKillDistance = .3f;
@@ -93,6 +93,7 @@ public class SecurityGuardAI : MonoBehaviour
     //Calculate life remaining after taking damage
     public void TakeDamage(float damage)
     {
+        guardAttacked = true;
         health -= damage;
         if (health <= 0)
         {
@@ -144,22 +145,32 @@ public class SecurityGuardAI : MonoBehaviour
     //Change state if player is detected by the camera
     public void IsDetected()
     {
-        if (playerDetected.getPlayerDetected())
-        {
-            Debug.Log("Player Detected");
-            navMeshAgent.SetDestination(player.position);
-            aiState = AIState.search;
-            anim.SetBool("chase", true);
-        }
+        //if (playerDetected.GetPlayerDetected())
+       // {
+        //    Debug.Log("Player Detected");
+        //    navMeshAgent.SetDestination(player.position);
+       //     aiState = AIState.search;
+        //    anim.SetBool("chase", true);
+        //}
     }
 
-//If the guard sees the player
-public bool Seen()
+    //If the guard sees the player
+    public bool Seen()
     {
+        Debug.Log("Seen method");
         var directionToPlayer = player.position - transform.position;
         var distFromPlayer = Vector3.Distance(player.position, transform.position);
+        Debug.Log("Dist from player " + distFromPlayer);
+        Debug.Log("Angle " + Vector3.Angle(directionToPlayer, transform.forward));
 
-        bool sight = Vector3.Angle(directionToPlayer, transform.forward) <= sightAngle && distFromPlayer <= sightDistance;
+        bool sight = false;
+
+        if ((Vector3.Angle(directionToPlayer, transform.forward) <= sightAngle) && (distFromPlayer <= sightDistance))
+        {
+            sight = true;
+        }
+        //bool sight = (Vector3.Angle(directionToPlayer, transform.forward) <= sightAngle) && (distFromPlayer <= sightDistance);
+        Debug.Log("Sight " + sight);
         return sight;
     }
 
@@ -171,6 +182,7 @@ public bool Seen()
             {
                 //The guard is doing his normal patrol
                 case AIState.patrol:
+                    Debug.Log("Patrol State");
                     //Check if guard is dead and change state
                     IsDead();
 
@@ -209,6 +221,7 @@ public bool Seen()
 
                 //The guard is actively seeking out the player
                 case AIState.search:
+                    Debug.Log("Search state");
                     //Check if guard is dead and change state
                     IsDead();
 
@@ -237,6 +250,7 @@ public bool Seen()
 
                 //The guard is chasing the player
                 case AIState.chase:
+                    Debug.Log("Chase State");
                     //Check if guard is dead and change state
                     IsDead();
 
@@ -272,6 +286,7 @@ public bool Seen()
                 
                 //The guard has been hit by a tazer
                 case AIState.stunned:
+                    Debug.Log("Stunned State");
                     //Check if guard is dead and change state
                     IsDead();
 
@@ -282,11 +297,13 @@ public bool Seen()
                     break;
                 //The guard has attacked, and the player is dead
                 case AIState.attack:
-                    Debug.Log("DEAD");
+                    Debug.Log("Attack State");
+                    Debug.Log("Player DEAD");
                     Application.Quit();
                     break;
                 //The guard has died
                 case AIState.dead:
+                    Debug.Log("Death state");
                     anim.SetBool("dead", true);
                     break;
             }

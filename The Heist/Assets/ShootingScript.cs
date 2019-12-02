@@ -48,7 +48,7 @@ public class ShootingScript : MonoBehaviour
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range)) {
             Debug.Log(hit.transform.name);
 
-            SecurityGuardAIDamage target = hit.transform.GetComponent<SecurityGuardAIDamage>();
+            SecurityGuardAI target = hit.transform.GetComponent<SecurityGuardAI>();
 
             //Take damage if holding pistol
             if (target != null && Weapons.currentWeapon == 1) {
@@ -70,7 +70,7 @@ public class ShootingScript : MonoBehaviour
         {
             Debug.Log(hit.transform.name);
 
-            SecurityGuardAIDamage target = hit.transform.GetComponent<SecurityGuardAIDamage>();
+            SecurityGuardAI target = hit.transform.GetComponent<SecurityGuardAI>();
 
             if (target != null && Weapons.currentWeapon == 3)
             {

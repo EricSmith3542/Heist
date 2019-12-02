@@ -39,7 +39,7 @@ public class scr_camera : MonoBehaviour
         }
     }
 
-    public bool getPlayerDetected()
+    public bool GetPlayerDetected()
     {
         return PlayerDetected;
     }
