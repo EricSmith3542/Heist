@@ -11,6 +11,9 @@ public class TutorialTextMeshPro : MonoBehaviour
                         "Your mission, should you choose to accept it, and you don't have a choice",
                         "Is to enter the mansion, steal some stuff, and get out",
                         "Watch out for security cameras, guards, and take note of your limited ammo",
+                        "Once you have collected all that you want, get back to the... ",
+                        "*Checks notes",
+                        "Get back to the ESCAPE CUBE!",
                         "Good Luck",
                         ""
                         };
@@ -41,7 +44,10 @@ public class TutorialTextMeshPro : MonoBehaviour
         if (tutorialTimer <= 0f && firstText)
         {
             textIterator++;
-            tutorialText.text = tutText[textIterator];
+            if (textIterator < tutText.Length)
+            {
+                tutorialText.text = tutText[textIterator];
+            }
             tutorialTimer = 4f;
         }
     }

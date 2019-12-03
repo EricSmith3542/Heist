@@ -7,10 +7,11 @@ public class ArtifactStolen : MonoBehaviour
 {
     public static float playerMoney = 0f;
     public static bool artifactStolen = false;
-
+    public Camera fpsCam;
+    public float clickRange = 100f;
 
    public string[] artifacts = { "GreekVase", "Vase2",  "Vase3", "Painting1", "Painting2", "QueenVictoria", "DragonStatue",
-        "FigurineStatue", "Discobolus", "NefertitiBust", "EgyptianCat", "JapaneseMask", "JuliusCaesar"}; //13 Artifacts
+        "Figurine Statue", "Discobolus", "NefertitiBust", "EgyptianCat", "JapaneseMask", "JuliusCaesar"}; //13 Artifacts
 
     public float[] artifactValue = {
             18870f, //GreekVase
@@ -20,7 +21,7 @@ public class ArtifactStolen : MonoBehaviour
             9715f, //Painting2
             23345f, //QueenVictoria
             22650f, //DragonStatue
-            4000f, //FigurineStatue
+            4000f, //Figurine Statue
             55990f, //Discobolus
             90000f, //NefertitiBust
             12000f, //EgyptianCat
@@ -37,13 +38,128 @@ public class ArtifactStolen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Click();
+        }
     }
 
     public float getPlayerMoney() {
         return playerMoney;
     }
 
+    void Click()
+    {
+         RaycastHit hit;
+         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, clickRange))
+         {
+             if (hit.transform.tag == "GreekVase")
+             {
+                playerMoney += artifactValue[0];
+                artifactStolen = true;
+                GameObject[] tags = GameObject.FindGameObjectsWithTag("GreekVase");
+                foreach (GameObject tag in tags)
+                    Destroy(tag);
+             }
+
+             if (hit.transform.tag == "Vase2")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("Vase2");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "Vase3")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("Vase3");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "Painting1")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("Painting1");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "Painting2")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("Painting2");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "QueenVictoria")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("QueenVictoria");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "DragonStatue")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("DragonStatue");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "Figurine Statue")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("Figurine Statue");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "Discobolus")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("Discobolus");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "NefertitiBust")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("NefertitiBust");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "EgyptianCat")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("EgyptianCat");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "JapaneseMask")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("JapaneseMask");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+             if (hit.transform.tag == "JuliusCaesar")
+             {
+                 playerMoney += artifactValue[0];
+                 artifactStolen = true;
+                 GameObject[] tags = GameObject.FindGameObjectsWithTag("JuliusCaesar");
+                 foreach (GameObject tag in tags)
+                     Destroy(tag);
+             }
+         }
+    }
     void OnCollisionEnter(Collision other)
     {
 
@@ -89,7 +205,7 @@ public class ArtifactStolen : MonoBehaviour
             artifactStolen = true;
             Destroy(other.gameObject);
         }
-        if (other.gameObject.tag == "FigurineStatue")
+        if (other.gameObject.tag == "Figurine Statue")
         {
             playerMoney += artifactValue[7];
             artifactStolen = true;
@@ -119,7 +235,7 @@ public class ArtifactStolen : MonoBehaviour
             artifactStolen = true;
             Destroy(other.gameObject);
         }
-        if (other.gameObject.tag == "JuluisCeasar")
+        if (other.gameObject.tag == "JuliusCaesar")
         {
             playerMoney += artifactValue[12];
             artifactStolen = true;

@@ -11,6 +11,11 @@ public class DogAI : MonoBehaviour
     private int nextPatrolIndex = 0;
     private SecurityGuardAI guardAI;
 
+    public float doggoHealth = 50f;
+
+    bool isDeadBool = false;
+    bool isTazedBool = false;
+
     public Transform player;
     public float chaseDistance = 2f;
     public float killDistance = .1f;
@@ -38,6 +43,31 @@ public class DogAI : MonoBehaviour
     {
     }
 
+    public void TakeDamage(float damage) {
+        doggoHealth -= damage;
+        if (doggoHealth <= 0) {
+            isDeadBool = true;
+        }
+    }
+
+    public void SetTazed() {
+        isTazedBool = true;
+    }
+    void isTazed()
+    {
+        if (isTazedBool)
+        {
+            aiState = AIState.tazed;
+        }
+    }
+
+    void isDead()
+    {
+        if (isDeadBool)
+        {
+            aiState = AIState.dead;
+        }
+    }
     IEnumerator Think()
     {
         while (true)
@@ -45,6 +75,9 @@ public class DogAI : MonoBehaviour
             switch (aiState)
             {
                 case AIState.follow:
+                    isDead();
+                    isTazed();
+
                     if(guardAI.aiState == SecurityGuardAI.AIState.chase)
                     {
                         aiState = AIState.chase;
@@ -56,6 +89,9 @@ public class DogAI : MonoBehaviour
                     break;
 
                 case AIState.lost:
+                    isDead();
+                    isTazed();
+
                     var dist = -1f;
                     foreach(GameObject g in GameObject.FindGameObjectsWithTag("Guard"))
                     {
@@ -71,6 +107,9 @@ public class DogAI : MonoBehaviour
                     break;
 
                 case AIState.chase:
+                    isDead();
+                    isTazed();
+
                     navMeshAgent.SetDestination(player.position);
                     if(Vector3.Distance(player.position, transform.position) <= killDistance)
                     {
@@ -79,13 +118,21 @@ public class DogAI : MonoBehaviour
                     break;
 
                 case AIState.attack:
+                    isDead();
+                    isTazed();
+
                     Debug.Log("DEAD");
                     Application.Quit();
                     break;
 
                 case AIState.tazed:
                     yield return new WaitForSeconds(30f);
+                    isTazedBool = false;
                     aiState = AIState.lost;
+                    break;
+
+                case AIState.dead:
+                    Destroy(this.gameObject);
                     break;
             }
             yield return new WaitForSeconds(.5f);

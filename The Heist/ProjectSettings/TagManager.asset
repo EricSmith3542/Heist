@@ -15,15 +15,18 @@ TagManager:
   - Vase3
   - Painting1
   - Painting2
-  - Queen Victoria
   - Dragon Statue
   - Figurine Statue
   - Discobulus
   - NefertitiBust
   - EgyptianCat
   - JapaneseMask
-  - Julius Ceasar
   - End
+  - Julius Caesar
+  - JuliusCaesar
+  - QueenVictoria
+  - GreekVase
+  - DragonStatue
   layers:
   - Default
   - TransparentFX

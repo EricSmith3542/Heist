@@ -28,11 +28,11 @@ public class ShootingScript : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && ((Weapons.currentWeapon == 1 && AmmoScriptTMP.pistolAmmo > 0) || (Weapons.currentWeapon == 2 && AmmoScriptTMP.taserAmmo > 0)))
         {
             Shoot();
-            flash.MuzzleFlash();
+           // flash.MuzzleFlash();
         }
 
         //Knife
-        if(Input.GetButtonDown("Fire1") && (Weapons.currentWeapon == 3))
+        if(Input.GetButtonDown("Fire1") && (Weapons.currentWeapon == 4))
         {
             Knife();
         }
@@ -61,6 +61,18 @@ public class ShootingScript : MonoBehaviour
             {
                 target.SetTazed();
             }
+
+            DogAI targetDog = hit.transform.GetComponent<DogAI>();
+
+            if(targetDog != null && Weapons.currentWeapon == 1)
+            {
+                targetDog.TakeDamage(damageDealt);
+            }
+
+            if (targetDog != null && Weapons.currentWeapon == 2)
+            {
+                targetDog.SetTazed();
+            }
         }
     }
 
@@ -73,7 +85,7 @@ public class ShootingScript : MonoBehaviour
 
             SecurityGuardAI target = hit.transform.GetComponent<SecurityGuardAI>();
 
-            if (target != null && Weapons.currentWeapon == 3)
+            if (target != null && Weapons.currentWeapon == 4)
             {
                 target.TakeDamage(damageDealt);
             }
