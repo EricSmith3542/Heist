@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class DogAI : MonoBehaviour
 {
@@ -121,8 +122,8 @@ public class DogAI : MonoBehaviour
                     isDead();
                     isTazed();
 
-                    Debug.Log("DEAD");
-                    Application.Quit();
+                    //Debug.Log("DEAD");
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
                     break;
 
                 case AIState.tazed:

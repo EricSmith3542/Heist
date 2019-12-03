@@ -14,6 +14,9 @@ public class scr_camera : MonoBehaviour
     public bool AlarmActive;
     public float alertRadius;
 
+    public float cameraHealth = 50f;
+    public bool cameraDestroyed = false;
+
 
     // Use this for initialization
     void Start()
@@ -44,6 +47,20 @@ public class scr_camera : MonoBehaviour
         return PlayerDetected;
     }
 
+    public void TakeDamage(float damage)
+    {
+        cameraHealth -= damage;
+        if (cameraHealth <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void destroyCamera()
+    {
+        Destroy(this.gameObject);
+    }
+    private bool guardResponse = false;
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -65,21 +82,15 @@ public class scr_camera : MonoBehaviour
 
                 Debug.Log("DISTANCE: " + distFromAlert);
 
-                if (distFromAlert <= alertRadius)
+                if (!guardResponse && distFromAlert <= alertRadius)
                 {
                     Debug.Log("ALERTED");
-                    guard.GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(transform.position);
-
-                    try
-                    {
-                       // guard.GetComponent<SecurityGuardAI>().aiState = SecurityGuardAI.AIState.search;
-                    }
-                    catch(Exception e)
-                    {
-                       // guard.GetComponent<SecurityGuardAI2>().aiState = SecurityGuardAI2.AIState.search;
-                    }
+                    //guard.GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(transform.position);
+                    guard.GetComponent<SecurityGuardAI>().aiState = SecurityGuardAI.AIState.search;
+                    guardResponse = true;
                 }
             }
+            guardResponse = false;
 
         }
         Debug.Log("Entered");

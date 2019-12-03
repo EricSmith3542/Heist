@@ -12,6 +12,7 @@ public class SecurityGuardAI : MonoBehaviour
     private ArrayList patrolPoints = new ArrayList();
     public Transform patrollingTo;
     private int nextPatrolIndex = 0;
+    private float dist;
 
     public Transform player;
 
@@ -100,12 +101,13 @@ public class SecurityGuardAI : MonoBehaviour
     //Calculate life remaining after taking damage
     public void TakeDamage(float damage)
     {
-        Debug.Log("Damage Taken");
+        //Debug.Log("Damage Taken");
         guardAttacked = true;
         health -= damage;
         if (health <= 0)
         {
             isDead = true;
+            anim.SetBool("dead", true);
         }
     }
 
@@ -136,14 +138,14 @@ public class SecurityGuardAI : MonoBehaviour
     //Change state after guard fails to find player
     public void searchTimerEnded()
     {
-        Debug.Log("Back to patrol state");
+        //Debug.Log("Back to patrol state");
         aiState = AIState.patrol;
     }
 
     public void IsAttacked() {
         if (guardAttacked)
         {
-            Debug.Log("Guard attacked");
+            //Debug.Log("Guard attacked");
             navMeshAgent.SetDestination(player.position);
             aiState = AIState.chase;
             anim.SetBool("chase", true);
@@ -155,7 +157,7 @@ public class SecurityGuardAI : MonoBehaviour
     {
         //if (playerDetected.GetComponent<scr_camera>.GetPlayerDetected())
         //{
-        //    Debug.Log("Player Detected");
+        //    //Debug.Log("Player Detected");
         //    navMeshAgent.SetDestination(player.position);
         //    aiState = AIState.search;
         //    anim.SetBool("chase", true);
@@ -165,11 +167,11 @@ public class SecurityGuardAI : MonoBehaviour
     //If the guard sees the player
     public bool Seen()
     {
-        Debug.Log("Seen method");
+        //Debug.Log("Seen method");
         var directionToPlayer = player.position - transform.position;
         var distFromPlayer = Vector3.Distance(player.position, transform.position);
-        Debug.Log("Dist from player " + distFromPlayer);
-        Debug.Log("Angle " + Vector3.Angle(directionToPlayer, transform.forward));
+        //Debug.Log("Dist from player " + distFromPlayer);
+        //Debug.Log("Angle " + Vector3.Angle(directionToPlayer, transform.forward));
 
         bool sight = false;
 
@@ -178,7 +180,7 @@ public class SecurityGuardAI : MonoBehaviour
             sight = true;
         }
         //bool sight = (Vector3.Angle(directionToPlayer, transform.forward) <= sightAngle) && (distFromPlayer <= sightDistance);
-        Debug.Log("Sight " + sight);
+        //Debug.Log("Sight " + sight);
         return sight;
     }
 
@@ -190,7 +192,7 @@ public class SecurityGuardAI : MonoBehaviour
             {
                 //The guard is doing his normal patrol
                 case AIState.patrol:
-                    Debug.Log("Patrol State");
+                    //Debug.Log("Patrol State");
                     ////Check if guard is dead and change state
                     //IsDead();
 
@@ -229,16 +231,19 @@ public class SecurityGuardAI : MonoBehaviour
 
                 //The guard is actively seeking out the player
                 case AIState.search:
-                    Debug.Log("Search state");
+                    //Debug.Log("Search state");
                     ////Check if guard is dead and change state
                     //IsDead();
 
                     ////Check if guard is tazed and change state
                     //IsTazed();
+                    
+                    navMeshAgent.SetDestination(player.position);
 
-                    if (Seen())
+                    dist = Vector3.Distance(player.position, transform.position);
+
+                    if (dist <= chaseDistance)
                     {
-                        navMeshAgent.SetDestination(player.position);
                         aiState = AIState.chase;
                         anim.SetBool("chase", true);
                     }
@@ -258,14 +263,14 @@ public class SecurityGuardAI : MonoBehaviour
 
                 //The guard is chasing the player
                 case AIState.chase:
-                    Debug.Log("Chase State");
+                    //Debug.Log("Chase State");
                     ////Check if guard is dead and change state
                     //IsDead();
 
                     ////Check if guard is tazed and change state
                     //IsTazed();
 
-                    var dist = Vector3.Distance(player.position, transform.position);
+                    dist = Vector3.Distance(player.position, transform.position);
 
                     /* 
                     if ((lethalForce && lethalKillDistance >= dist) || nonLethalKillDistance >= dist)
@@ -275,8 +280,8 @@ public class SecurityGuardAI : MonoBehaviour
                     */
 
                     //Attack player if player is within kill distance
-                    if ((guardAttacked || ArtifactStolen.artifactStolen) && lethalKillDistance <= dist) {
-                        Debug.Log("Player Killed");
+                    if ((guardAttacked || ArtifactStolen.artifactStolen) && lethalKillDistance >= dist) {
+                        //Debug.Log("Player Killed");
                         aiState = AIState.attack;
                     }
 
@@ -294,7 +299,7 @@ public class SecurityGuardAI : MonoBehaviour
                 
                 //The guard has been hit by a tazer
                 case AIState.stunned:
-                    Debug.Log("Stunned State");
+                    //Debug.Log("Stunned State");
                     //Check if guard is dead and change state
                     IsDead();
 
@@ -307,14 +312,14 @@ public class SecurityGuardAI : MonoBehaviour
                     break;
                 //The guard has attacked, and the player is dead
                 case AIState.attack:
-                    Debug.Log("Attack State");
-                    Debug.Log("Player DEAD");
+                    //Debug.Log("Attack State");
+                    //Debug.Log("Player DEAD");
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
                     //Application.Quit();
                     break;
                 //The guard has died
                 case AIState.dead:
-                    Debug.Log("Death state");
+                    //Debug.Log("Death state");
                     navMeshAgent.Stop();
                     anim.SetBool("dead", true);
                     yield return new WaitForSeconds(3f);

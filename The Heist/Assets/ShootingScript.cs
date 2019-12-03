@@ -73,6 +73,13 @@ public class ShootingScript : MonoBehaviour
             {
                 targetDog.SetTazed();
             }
+
+            scr_camera cam = hit.transform.GetComponent<scr_camera>();
+
+            if (cam != null && Weapons.currentWeapon == 1)
+            {
+                cam.TakeDamage(damageDealt);
+            }
         }
     }
 
@@ -90,6 +97,18 @@ public class ShootingScript : MonoBehaviour
                 target.TakeDamage(damageDealt);
             }
 
+            DogAI targetDog = hit.transform.GetComponent<DogAI>();
+
+            {
+                targetDog.TakeDamage(damageDealt);
+            }
+
+            scr_camera cam = hit.transform.GetComponent<scr_camera>();
+
+            if (cam != null && Weapons.currentWeapon == 4)
+            {
+                cam.TakeDamage(damageDealt);
+            }
         }
     }
 
