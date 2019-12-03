@@ -10,6 +10,20 @@ TagManager:
   - Guard
   - Patrol Point
   - Bust
+  - Greek Vase
+  - Vase2
+  - Vase3
+  - Painting1
+  - Painting2
+  - Queen Victoria
+  - Dragon Statue
+  - Figurine Statue
+  - Discobulus
+  - NefertitiBust
+  - EgyptianCat
+  - JapaneseMask
+  - Julius Ceasar
+  - End
   layers:
   - Default
   - TransparentFX

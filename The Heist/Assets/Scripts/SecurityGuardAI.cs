@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+
 
 public class SecurityGuardAI : MonoBehaviour
 {
@@ -299,7 +301,8 @@ public class SecurityGuardAI : MonoBehaviour
                 case AIState.attack:
                     Debug.Log("Attack State");
                     Debug.Log("Player DEAD");
-                    Application.Quit();
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                    //Application.Quit();
                     break;
                 //The guard has died
                 case AIState.dead:
