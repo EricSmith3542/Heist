@@ -9,8 +9,6 @@ public class ShootingScript : MonoBehaviour
     public float range = 100f;
     public float knifeRange = .3f;
     public float damageDealt = 50f;
-
-    public WeaponsGraphics flash;
     public Grenade grenade1;
     
 
@@ -28,7 +26,7 @@ public class ShootingScript : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && ((Weapons.currentWeapon == 1 && AmmoScriptTMP.pistolAmmo > 0) || (Weapons.currentWeapon == 2 && AmmoScriptTMP.taserAmmo > 0)))
         {
             Shoot();
-           // flash.MuzzleFlash();
+           Weapons.currentMuzzleFlash.MuzzleFlash();
         }
 
         //Knife

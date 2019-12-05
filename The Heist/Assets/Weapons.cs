@@ -13,8 +13,10 @@ public class Weapons : MonoBehaviour //Weapons
      */
 
     public static int currentWeapon = 0;
+    public static WeaponsGraphics currentMuzzleFlash;
     int numOfWeapons = 5;
     public GameObject[] weaponsObjects;
+    public WeaponsGraphics[] graphics;
 
     void Start()
     {
@@ -50,6 +52,8 @@ public class Weapons : MonoBehaviour //Weapons
             {
                 Debug.Log("Activated");
                 weaponsObjects[i].SetActive(true);
+                if(graphics[i] != null)
+                    currentMuzzleFlash = graphics[i];
             }
             else
             {
