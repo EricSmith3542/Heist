@@ -9,13 +9,17 @@ public class scr_camera : MonoBehaviour
     public bool enter;
     private int count;
     public AudioClip alarm;
+    public AudioClip beep;
+    public AudioClip cameraDestroy;
     private AudioSource source;
+    public AudioSource source2;
+    public GameObject CameraShock;
     public bool PlayerDetected;
     public bool AlarmActive;
     public float alertRadius;
-
     public float cameraHealth = 50f;
-    public bool cameraDestroyed = false;
+    private int alarmTimerBeeper = 0;
+    private int alarmTimerMain = 0;
 
 
     // Use this for initialization
@@ -39,34 +43,29 @@ public class scr_camera : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             source.Stop();
+            AlarmActive = false;
         }
-    }
-
-    public bool GetPlayerDetected()
-    {
-        return PlayerDetected;
-    }
-
-    public void TakeDamage(float damage)
-    {
-        cameraHealth -= damage;
-        if (cameraHealth <= 0)
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            Destroy(this.gameObject);
+            DestroyCamera();
         }
     }
 
-    public void destroyCamera()
-    {
-        Destroy(this.gameObject);
-    }
-    private bool guardResponse = false;
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
             PlayerDetected = true;
-            if (AlarmActive == false)
+            alarmTimerBeeper++;
+            alarmTimerMain++;
+
+            if (AlarmActive == false && alarmTimerBeeper >= 90)
+            {
+                source.PlayOneShot(beep);
+                alarmTimerBeeper = 0;
+            }
+
+            if (AlarmActive == false && alarmTimerMain >= 480)
             {
                 // Play the sound only on the trigger
                 source.Play();
@@ -82,29 +81,50 @@ public class scr_camera : MonoBehaviour
 
                 Debug.Log("DISTANCE: " + distFromAlert);
 
-                if (!guardResponse && distFromAlert <= alertRadius)
+                if (distFromAlert <= alertRadius)
                 {
                     Debug.Log("ALERTED");
-                    //guard.GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(transform.position);
-                    guard.GetComponent<SecurityGuardAI>().aiState = SecurityGuardAI.AIState.search;
-                    guardResponse = true;
+                    guard.GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(transform.position);
+
+                    try
+                    {
+                        guard.GetComponent<SecurityGuardAI>().aiState = SecurityGuardAI.AIState.search;
+                    }
+                    catch (Exception e)
+                    {
+                        guard.GetComponent<SecurityGuardAI2>().aiState = SecurityGuardAI2.AIState.search;
+                    }
                 }
             }
-            guardResponse = false;
 
         }
         Debug.Log("Entered");
     }
-    /*
+
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-            enter = false;
-            count = 1;
+            alarmTimerMain = 0;
+            alarmTimerBeeper = 0;
         }
-        Debug.Log("Exited");
     }
-    */
+
+    public void DestroyCamera()
+    {
+        source2.Play();
+        Instantiate(CameraShock, transform.position, transform.rotation);
+        transform.Rotate(0, 0, -70, Space.Self);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        cameraHealth -= damage;
+        if(cameraHealth <= 0)
+        {
+            DestroyCamera();
+        }
+    }
+
 }
 

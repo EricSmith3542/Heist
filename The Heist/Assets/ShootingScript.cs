@@ -72,9 +72,9 @@ public class ShootingScript : MonoBehaviour
                 targetDog.SetTazed();
             }
 
-            scr_camera cam = hit.transform.GetComponent<scr_camera>();
+            scr_camera cam = hit.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<scr_camera>();
 
-            if (cam != null && Weapons.currentWeapon == 1)
+            if (cam != null && (Weapons.currentWeapon == 1 || Weapons.currentWeapon == 2))
             {
                 cam.TakeDamage(damageDealt);
             }

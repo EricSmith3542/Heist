@@ -46,20 +46,26 @@ public class Weapons : MonoBehaviour //Weapons
 
     public void SwitchWeapons(int newWeapon)
     {
-        for (int i = 0; i < numOfWeapons; i++)
+        foreach(GameObject weapon in weaponsObjects)
         {
-            if (i == newWeapon)
-            {
-                Debug.Log("Activated");
-                weaponsObjects[i].SetActive(true);
-                if(graphics[i] != null)
-                    currentMuzzleFlash = graphics[i];
-            }
-            else
-            {
-                Debug.Log("Deactivated");
-                weaponsObjects[i].SetActive(false);
-            }
+            weapon.SetActive(false);
         }
+        weaponsObjects[newWeapon].SetActive(true);
+
+        //for (int i = 0; i < numOfWeapons-1; i++)
+        //{
+        //    if (i == newWeapon)
+        //    {
+        //        Debug.Log("Activated");
+        //        weaponsObjects[i].SetActive(true);
+        //        if(graphics[i] != null)
+        //            currentMuzzleFlash = graphics[i];
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("Deactivated");
+        //        weaponsObjects[i].SetActive(false);
+        //    }
+        //}
     }
 }
