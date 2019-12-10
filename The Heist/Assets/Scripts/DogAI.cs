@@ -79,7 +79,7 @@ public class DogAI : MonoBehaviour
                     isDead();
                     isTazed();
 
-                    if(guardAI.aiState == SecurityGuardAI.AIState.chase)
+                    if(guardAI.aiState == SecurityGuardAI.AIState.chase || guardAI.aiState == SecurityGuardAI.AIState.stunned || guardAI.aiState == SecurityGuardAI.AIState.dead)
                     {
                         aiState = AIState.chase;
                     }
@@ -127,12 +127,16 @@ public class DogAI : MonoBehaviour
                     break;
 
                 case AIState.tazed:
+                    anim.SetBool("stunned", true);
                     yield return new WaitForSeconds(30f);
+                    anim.SetBool("stunned", false);
                     isTazedBool = false;
                     aiState = AIState.lost;
                     break;
 
                 case AIState.dead:
+                    navMeshAgent.Stop();
+                    anim.SetBool("dead", true);
                     Destroy(this.gameObject);
                     break;
             }

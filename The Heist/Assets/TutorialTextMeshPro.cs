@@ -7,13 +7,11 @@ public class TutorialTextMeshPro : MonoBehaviour
 {
     TextMeshProUGUI tutorialText;
     bool firstText = false; //Used for the first weapon switch text
-    string[] tutText = {"Use numbers [1], [2], [3], [4], [5] to swap between your weapons",
-                        "Your mission, should you choose to accept it, and you don't have a choice",
-                        "Is to enter the mansion, steal some stuff, and get out",
-                        "Watch out for security cameras, guards, and take note of your limited ammo",
-                        "Once you have collected all that you want, get back to the... ",
-                        "*Checks notes",
-                        "Get back to the ESCAPE CUBE!",
+    string[] tutText = {"Use numbers [1], [2], [3], [4] to swap between your weapons",
+                        "Your mission is to steal as many artifacts as possible",
+                        "Watch out for guards and dogs, they will kill you if they spot you",
+                        "Cameras are placed throughout the house, staying in their sight too long will notify guards of your location",
+                        "Once you have collected all that you want, get back to your escape vehicle",
                         "Good Luck",
                         ""
                         };

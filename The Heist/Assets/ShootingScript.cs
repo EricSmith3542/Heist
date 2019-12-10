@@ -52,12 +52,14 @@ public class ShootingScript : MonoBehaviour
             //Take damage if holding pistol
             if (target != null && Weapons.currentWeapon == 1) {
                 target.TakeDamage(damageDealt);
+                return;
             }
 
             //Taze if holding taser
             if (target != null && Weapons.currentWeapon == 2)
             {
                 target.SetTazed();
+                return;
             }
 
             DogAI targetDog = hit.transform.GetComponent<DogAI>();
@@ -65,11 +67,13 @@ public class ShootingScript : MonoBehaviour
             if(targetDog != null && Weapons.currentWeapon == 1)
             {
                 targetDog.TakeDamage(damageDealt);
+                return;
             }
 
             if (targetDog != null && Weapons.currentWeapon == 2)
             {
                 targetDog.SetTazed();
+                return;
             }
 
             scr_camera cam = hit.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<scr_camera>();
