@@ -14,6 +14,8 @@ public class SecurityGuardAI : MonoBehaviour
     private int nextPatrolIndex = 0;
     private float dist;
 
+    private bool cleanerCost = false;
+
     public Transform player;
 
     //Check if AI is dead or stunned
@@ -122,6 +124,11 @@ public class SecurityGuardAI : MonoBehaviour
     {
         if (isDead)
         {
+            if (!cleanerCost)
+            {
+                cleanerCost = true;
+                ArtifactStolen.playerMoney -= 10000f;
+            }
             aiState = AIState.dead;
         }
     }

@@ -51,6 +51,7 @@ public class Weapons : MonoBehaviour //Weapons
             weapon.SetActive(false);
         }
         weaponsObjects[newWeapon].SetActive(true);
+        currentMuzzleFlash = graphics[newWeapon];
 
         //for (int i = 0; i < numOfWeapons-1; i++)
         //{

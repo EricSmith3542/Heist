@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Alpha Prototype.unity
     guid: 6457b56fa53babd449efa72dee89834a
   - enabled: 1
-    path: Assets/Scenes/Brandon-mess.unity
+    path: Assets/Scenes/Brandon.unity
     guid: 94b328f763e07c1428f5ac76fa4be7f4
   - enabled: 1
     path: Assets/Scenes/Victory Screen.unity
