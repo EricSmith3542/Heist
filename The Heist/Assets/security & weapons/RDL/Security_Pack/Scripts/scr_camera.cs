@@ -110,6 +110,11 @@ public class scr_camera : MonoBehaviour
         }
     }
 
+    public bool GetPlayerDetected()
+    {
+        return PlayerDetected;
+    }
+
     public void DestroyCamera()
     {
         source2.Play();

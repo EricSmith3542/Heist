@@ -29,7 +29,7 @@ public class SecurityGuardAI : MonoBehaviour
     public float health = 100f;
 
     //Chick if player has been detected by a camera
-    public GameObject playerDetected;
+    public scr_camera playerDetected;
 
     //Time before guard gives up on a search
     private bool timerSet = false;
@@ -162,13 +162,14 @@ public class SecurityGuardAI : MonoBehaviour
     //Change state if player is detected by the camera
     public void IsDetected()
     {
-        //if (playerDetected.GetComponent<scr_camera>.GetPlayerDetected())
-        //{
+        //playerDetected = GetComponent<scr_camera>;
+       // if (playerDetected.GetComponent<scr_camera>.GetPlayerDetected())
+       // {
         //    //Debug.Log("Player Detected");
         //    navMeshAgent.SetDestination(player.position);
         //    aiState = AIState.search;
-        //    anim.SetBool("chase", true);
-        //}
+       //     anim.SetBool("chase", true);
+       // }
     }
 
     //If the guard sees the player
@@ -201,10 +202,10 @@ public class SecurityGuardAI : MonoBehaviour
                 case AIState.patrol:
                     //Debug.Log("Patrol State");
                     ////Check if guard is dead and change state
-                    //IsDead();
+                    IsDead();
 
                     ////Check if guard is tazed and change state
-                    //IsTazed();
+                    IsTazed();
 
                     //Change states if it sees the player with a weapon or after an artifact has been stolen
                     if (Seen() && (Weapons.currentWeapon != 0 || ArtifactStolen.artifactStolen == true))
@@ -240,10 +241,10 @@ public class SecurityGuardAI : MonoBehaviour
                 case AIState.search:
                     //Debug.Log("Search state");
                     ////Check if guard is dead and change state
-                    //IsDead();
+                    IsDead();
 
                     ////Check if guard is tazed and change state
-                    //IsTazed();
+                    IsTazed();
                     
                     navMeshAgent.SetDestination(player.position);
 
@@ -272,10 +273,10 @@ public class SecurityGuardAI : MonoBehaviour
                 case AIState.chase:
                     //Debug.Log("Chase State");
                     ////Check if guard is dead and change state
-                    //IsDead();
+                    IsDead();
 
                     ////Check if guard is tazed and change state
-                    //IsTazed();
+                    IsTazed();
 
                     dist = Vector3.Distance(player.position, transform.position);
 
@@ -321,7 +322,7 @@ public class SecurityGuardAI : MonoBehaviour
                 case AIState.attack:
                     //Debug.Log("Attack State");
                     //Debug.Log("Player DEAD");
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
                     //Application.Quit();
                     break;
                 //The guard has died

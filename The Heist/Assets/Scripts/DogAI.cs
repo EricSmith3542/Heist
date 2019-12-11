@@ -123,7 +123,7 @@ public class DogAI : MonoBehaviour
                     isTazed();
 
                     //Debug.Log("DEAD");
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
                     break;
 
                 case AIState.tazed:

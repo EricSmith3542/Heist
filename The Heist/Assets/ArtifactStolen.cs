@@ -6,6 +6,7 @@ using UnityEngine;
 public class ArtifactStolen : MonoBehaviour
 {
     public static float playerMoney = 0f;
+    public static int playerDeaths = 0;
     public static bool artifactStolen = false;
     public Camera fpsCam;
     public float clickRange = 100f;
